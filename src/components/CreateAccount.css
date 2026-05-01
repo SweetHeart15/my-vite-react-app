@@ -1,0 +1,315 @@
+/* ── CreateAccount.css ── matches Login.css palette ── */
+
+.ca-overlay {
+  min-height: 100vh;
+  background-color: #f5ede6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  font-family: 'Georgia', serif;
+}
+
+/* ── Header ── */
+.ca-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.ca-brand {
+  font-size: 1.25rem;
+  font-style: italic;
+  font-weight: 400;
+  color: #7a5c4e;
+  letter-spacing: 0.02em;
+  margin: 0;
+}
+
+.ca-tagline {
+  font-size: 0.8rem;
+  color: #a08070;
+  margin: 0.2rem 0 0;
+  letter-spacing: 0.03em;
+}
+
+/* ── Card ── */
+.ca-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 2rem 2.25rem 1.75rem;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: 0 4px 24px rgba(120, 80, 60, 0.08);
+  animation: ca-slide-in 0.35s ease;
+}
+
+@keyframes ca-slide-in {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Back button ── */
+.ca-back-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: none;
+  border: none;
+  color: #a08070;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 1.25rem;
+  transition: color 0.2s;
+  font-family: inherit;
+}
+
+.ca-back-btn:hover { color: #7a5c4e; }
+
+/* ── Card top ── */
+.ca-card-top {
+  margin-bottom: 1.4rem;
+}
+
+.ca-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #2c1d16;
+  margin: 0 0 0.25rem;
+  font-family: inherit;
+}
+
+.ca-sub {
+  font-size: 0.875rem;
+  color: #a08070;
+  margin: 0;
+}
+
+/* ── Form ── */
+.ca-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.ca-name-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.ca-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.ca-input-group label {
+  font-size: 0.65rem;
+  font-family: sans-serif;
+  letter-spacing: 0.08em;
+  color: #a08070;
+  font-weight: 600;
+}
+
+.ca-input-group input {
+  border: 1px solid #e8d5c4;
+  border-radius: 8px;
+  padding: 0.6rem 0.85rem;
+  font-size: 0.9rem;
+  color: #2c1d16;
+  background: #fdfaf8;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  font-family: inherit;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.ca-input-group input::placeholder { color: #c9b0a0; }
+
+.ca-input-group input:focus {
+  border-color: #7a5c4e;
+  box-shadow: 0 0 0 3px rgba(122, 92, 78, 0.1);
+}
+
+.ca-input-group input.input-error {
+  border-color: #c0392b;
+  box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.08);
+}
+
+/* ── Password wrapper ── */
+.ca-pw-wrapper {
+  position: relative;
+}
+
+.ca-pw-wrapper input {
+  padding-right: 2.5rem;
+}
+
+.ca-eye-btn {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #a08070;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s;
+}
+
+.ca-eye-btn:hover { color: #7a5c4e; }
+
+/* ── Password strength ── */
+.ca-strength {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 0.3rem;
+}
+
+.ca-strength-bars {
+  display: flex;
+  gap: 3px;
+}
+
+.ca-bar {
+  width: 28px;
+  height: 3px;
+  border-radius: 2px;
+  background: #e8d5c4;
+  transition: background 0.25s;
+}
+
+.ca-bar.level-1 { background: #e74c3c; }
+.ca-bar.level-2 { background: #e67e22; }
+.ca-bar.level-3 { background: #f1c40f; }
+.ca-bar.level-4 { background: #27ae60; }
+
+.ca-strength-label {
+  font-size: 0.7rem;
+  font-family: sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.ca-strength-label.level-1 { color: #e74c3c; }
+.ca-strength-label.level-2 { color: #e67e22; }
+.ca-strength-label.level-3 { color: #d4ac0d; }
+.ca-strength-label.level-4 { color: #27ae60; }
+
+/* ── Validation messages ── */
+.ca-error {
+  font-size: 0.72rem;
+  color: #c0392b;
+  font-family: sans-serif;
+  margin-top: 0.1rem;
+}
+
+.ca-match {
+  font-size: 0.72rem;
+  color: #27ae60;
+  font-family: sans-serif;
+  margin-top: 0.15rem;
+}
+
+/* ── Submit button ── */
+.ca-submit-btn {
+  background: #7a5c4e;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 0.85rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: background 0.2s, transform 0.1s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+}
+
+.ca-submit-btn:hover:not(:disabled) { background: #5e4038; }
+.ca-submit-btn:active:not(:disabled) { transform: scale(0.98); }
+.ca-submit-btn:disabled { opacity: 0.7; cursor: not-allowed; }
+
+/* ── Spinner ── */
+.ca-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255,255,255,0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: ca-spin 0.7s linear infinite;
+  display: inline-block;
+}
+
+@keyframes ca-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Success state ── */
+.ca-success {
+  text-align: center;
+  padding: 2rem 0 1rem;
+  animation: ca-fade-in 0.4s ease;
+}
+
+@keyframes ca-fade-in {
+  from { opacity: 0; } to { opacity: 1; }
+}
+
+.ca-success-icon {
+  width: 52px;
+  height: 52px;
+  background: #e8f5e9;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: #27ae60;
+  margin: 0 auto 0.75rem;
+}
+
+.ca-success p {
+  color: #7a5c4e;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+/* ── Sign in link ── */
+.ca-signin-link {
+  text-align: center;
+  font-size: 0.82rem;
+  color: #a08070;
+  margin: 1.25rem 0 0;
+  font-family: sans-serif;
+}
+
+.ca-link {
+  background: none;
+  border: none;
+  color: #7a5c4e;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: inherit;
+  font-family: inherit;
+  padding: 0;
+}
+
+.ca-link:hover { color: #5e4038; }
+
+/* ── Responsive ── */
+@media (max-width: 520px) {
+  .ca-card { padding: 1.5rem 1.25rem; }
+  .ca-name-row { grid-template-columns: 1fr; }
+}

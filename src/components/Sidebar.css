@@ -1,0 +1,153 @@
+.sidebar {
+  width: var(--sidebar-w);
+  position: fixed;
+  top: 0; left: 0;
+  height: 100vh;
+  background: #fff;
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  padding: 1.75rem 0 1.5rem;
+  z-index: 100;
+}
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0 1.25rem 1.75rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 1.25rem;
+}
+
+.brand-mark {
+  color: var(--brand);
+  font-size: 1.1rem;
+}
+
+.brand-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--brand-dark);
+  line-height: 1.1;
+  font-style: italic;
+}
+
+.brand-sub {
+  font-size: 0.6rem;
+  color: var(--text-light);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0 0.75rem;
+  flex: 1;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.6rem 0.75rem;
+  border: none;
+  background: none;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  text-align: left;
+  transition: all 0.18s;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+
+.nav-item:hover {
+  background: var(--bg-muted);
+  color: var(--brand);
+}
+
+.nav-item.active {
+  background: var(--bg-muted);
+  color: var(--brand);
+  font-weight: 500;
+  border-left: 2px solid var(--brand);
+}
+
+.nav-icon { display: flex; align-items: center; }
+
+.sidebar-logout {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0.75rem;
+  padding: 0.55rem 0.75rem;
+  border: none;
+  background: none;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  color: var(--text-light);
+  transition: all 0.18s;
+}
+
+.sidebar-logout:hover {
+  color: #c0392b;
+  background: #fdf5f5;
+}
+/* ── Append these styles to your existing Sidebar.css ── */
+
+.sidebar-user {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0 0.75rem 0.5rem;
+  padding: 0.6rem 0.75rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.18s;
+  border-top: 1px solid var(--border);
+  padding-top: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.sidebar-user:hover {
+  background: var(--bg-muted);
+}
+
+.sidebar-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--brand);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.sidebar-user-info {
+  overflow: hidden;
+}
+
+.sidebar-user-name {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--brand-dark);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-user-email {
+  font-size: 0.65rem;
+  color: var(--text-light);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

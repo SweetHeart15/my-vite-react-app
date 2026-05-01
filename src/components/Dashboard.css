@@ -1,0 +1,246 @@
+.dashboard { max-width: 900px; }
+
+.dash-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.dash-greeting {
+  font-size: 1.8rem;
+  color: var(--text);
+  font-style: italic;
+}
+
+.dash-actions { display: flex; align-items: center; gap: 0.75rem; }
+
+.icon-btn {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.45rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  transition: all 0.2s;
+}
+.icon-btn:hover { border-color: var(--brand-light); color: var(--brand); }
+
+.profile-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 0.3rem 0.75rem 0.3rem 0.3rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.profile-avatar {
+  width: 26px; height: 26px;
+  background: var(--brand);
+  color: #fff;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+/* Grid */
+.dash-grid {
+  display: grid;
+  grid-template-columns: 1fr 240px;
+  grid-template-rows: auto auto auto;
+  gap: 1.25rem;
+}
+
+/* ── Balance Card ────────────────────────────────────────────────── */
+.balance-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 1.75rem;
+  border: 1.5px solid #c4a090;
+  box-shadow: 0 4px 24px rgba(122, 92, 78, 0.13);
+}
+
+.balance-label {
+  font-size: 0.72rem;
+  color: var(--text-light);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+
+.balance-amount {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.8rem;
+  font-weight: 300;
+  color: var(--text);
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.balance-meta {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-bottom: 1.25rem;
+}
+.balance-meta strong { color: var(--text); margin-left: 0.25rem; }
+.status-balanced { color: var(--success) !important; }
+
+.progress-label-row { display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.5rem; }
+.progress-label-row strong { color: var(--brand); }
+
+.progress-bar {
+  height: 6px;
+  background: var(--bg-muted);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--brand-light), var(--brand));
+  border-radius: 10px;
+  transition: width 0.8s ease;
+}
+
+/* ── Side cards (Income & Expenses) ─────────────────────────────── */
+.side-cards { display: flex; flex-direction: column; gap: 1rem; }
+
+.info-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 1.1rem 1.25rem;
+  border: 1.5px solid #c4a090;
+  box-shadow: 0 4px 16px rgba(122, 92, 78, 0.11);
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.info-card-icon {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.9rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.income-icon { background: #d6ede0; color: var(--success); }
+.expense-icon { background: #f5ddd4; color: var(--brand); }
+
+.info-card-label {
+  font-size: 0.68rem;
+  color: var(--text-light);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 0.2rem;
+}
+.info-card-value {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: var(--text);
+}
+.info-card-sub { font-size: 0.7rem; color: var(--text-light); margin-top: 0.15rem; }
+
+/* ── Recent Rituals card ─────────────────────────────────────────── */
+.rituals-card {
+  grid-column: 1 / 2;
+  background: #fff;
+  border-radius: 16px;
+  padding: 1.5rem;
+  border: 1.5px solid #c4a090;
+  box-shadow: 0 4px 24px rgba(122, 92, 78, 0.13);
+}
+
+.section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; }
+.section-header h2 { font-size: 1.1rem; font-style: italic; }
+
+.view-all-btn {
+  background: none;
+  border: none;
+  font-size: 0.75rem;
+  color: var(--brand);
+  text-decoration: underline;
+  padding: 0;
+}
+
+.ritual-list { display: flex; flex-direction: column; gap: 0; }
+
+.ritual-item {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.ritual-item:last-child { border-bottom: none; }
+
+.ritual-icon {
+  width: 34px; height: 34px;
+  background: var(--bg-muted);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+}
+
+.ritual-info { flex: 1; }
+.ritual-name { font-size: 0.85rem; font-weight: 500; color: var(--text); }
+.ritual-meta { font-size: 0.7rem; color: var(--text-light); margin-top: 0.1rem; }
+
+.ritual-amount { font-size: 0.88rem; font-weight: 500; margin-right: 0.5rem; }
+.ritual-amount.negative { color: var(--text); }
+.ritual-amount.positive { color: var(--success); }
+
+.ritual-status {
+  font-size: 0.62rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 20px;
+  letter-spacing: 0.04em;
+  font-weight: 500;
+}
+.ritual-status.cleared { background: #d6ede0; color: var(--success); }
+.ritual-status.pending { background: #f5ddd4; color: var(--pending); }
+
+/* ── Insight card ────────────────────────────────────────────────── */
+.insight-card {
+  grid-column: 2 / 3;
+  grid-row: 2 / 4;
+  background: var(--text);
+  border-radius: 16px;
+  padding: 1.5rem;
+  color: #e8d8cc;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  box-shadow: 0 4px 24px rgba(44, 29, 22, 0.18);
+}
+
+.insight-badge {
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  color: var(--brand-light);
+  font-weight: 600;
+}
+
+.insight-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.15rem;
+  font-style: italic;
+  line-height: 1.4;
+  color: #f5ede8;
+}
+
+.insight-sub {
+  font-size: 0.75rem;
+  line-height: 1.6;
+  color: #a08878;
+}
