@@ -147,22 +147,24 @@
 .save-goal-btn:hover:not(:disabled) { background: var(--brand-dark); }
 .save-goal-btn:disabled { opacity: 0.55; cursor: not-allowed; }
 
-/* ── Goals grid ── */
+/* ── Goals grid — fixed uniform layout ── */
 .goals-grid {
   display: grid;
-  grid-template-columns: 1fr 260px;
-  grid-template-rows: auto auto;
+  grid-template-columns: repeat(2, 1fr);
   gap: 1.25rem;
+  align-items: stretch;
 }
 
-/* ── Featured card ── */
+/* ── Featured card — fixed height ── */
 .goal-featured {
+  grid-column: 1 / 2;
   grid-row: 1 / 2;
   border-radius: 18px;
   padding: 1.75rem;
   position: relative;
   overflow: hidden;
-  min-height: 260px;
+  height: 320px;              /* fixed — never grows or shrinks */
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -170,103 +172,127 @@
   box-shadow: 0 2px 12px rgba(45,26,16,0.08);
 }
 
-.goal-type-badge {
-  position: absolute;
-  top: 1.25rem; left: 1.25rem;
-  font-size: 0.62rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  background: rgba(255,255,255,0.75);
-  padding: 0.25rem 0.6rem;
-  border-radius: 20px;
-  font-weight: 600;
-  border: 1px solid rgba(0,0,0,0.08);
+/* ── Side column ── */
+.goals-side {
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
 }
 
-.goal-due {
-  position: absolute;
-  top: 1.25rem; right: 1.25rem;
-  text-align: right;
-  font-size: 0.6rem;
-  color: var(--text-muted);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-.goal-due strong {
-  display: block;
-  font-size: 0.78rem;
-  color: var(--text);
-  text-transform: none;
-  letter-spacing: 0;
+/* ── Side cards — same fixed height as featured ── */
+.goal-card {
+  border-radius: 18px;
+  padding: 1.75rem;
+  border: 1.5px solid var(--border);
+  box-shadow: 0 2px 12px rgba(45,26,16,0.08);
+  height: 320px;              /* same fixed height as featured */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  position: relative;
+  overflow: hidden;
 }
 
+/* ── Emoji sits behind content ── */
 .goal-emoji-bg {
   position: absolute;
-  top: 50%; right: 1.5rem;
+  top: 50%;
+  right: 1.5rem;
   transform: translateY(-60%);
   font-size: 5rem;
   opacity: 0.2;
   pointer-events: none;
+  z-index: 0;
 }
 
+/* ── All card text/buttons sit above emoji ── */
+.goal-name,
+.goal-card-name,
+.goal-amounts,
+.goal-card-amounts,
+.goal-progress-bar,
+.goal-progress-meta,
+.goal-card-btns,
+.add-money-row,
+.goal-history,
+.add-status-msg,
+.goal-type-badge,
+.goal-due {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Goal name — consistent size across all cards ── */
 .goal-name {
   font-size: 1.8rem;
   font-style: italic;
   color: var(--text);
   margin-bottom: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;    /* long names get ... instead of wrapping */
 }
 
-.goal-amounts { display: flex; gap: 2.5rem; margin-bottom: 1rem; }
-.amount-label {
+.goal-card-name {
+  font-size: 1.8rem;       /* single size everywhere — remove the 1.4rem and 1.05rem overrides */
+  font-style: italic;
+  color: var(--text);
+  margin-bottom: 1rem;
+  margin-top: auto;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Card amounts — unified ── */
+.goal-card-amounts {
+  display: flex;
+  gap: 2.5rem;
+  margin-bottom: 1rem;
+  align-items: flex-start;
+  position: relative;
+  z-index: 1;
+}
+
+.gc-label {
   font-size: 0.62rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--text-muted);
   margin-bottom: 0.25rem;
   font-weight: 600;
+  display: block;
 }
-.amount-value {
+
+.gc-current {
   font-family: 'Cormorant Garamond', serif;
   font-size: 1.5rem;
-  font-weight: 400;
   color: var(--text);
+  display: block;
 }
 
-.goal-progress-bar {
-  height: 6px;
-  background: rgba(0,0,0,0.12);
-  border-radius: 10px;
-  overflow: hidden;
-  margin-bottom: 0.5rem;
+.gc-total {
+  font-size: 0.75rem;
+  color: var(--text-light);
 }
-.goal-progress-fill {
-  height: 100%;
-  background: var(--brand);
-  border-radius: 10px;
-  transition: width 0.8s ease;
-}
-.goal-progress-fill.light { background: rgba(255,255,255,0.75); }
-.goal-progress-bar.slim { height: 4px; }
 
-.goal-progress-meta {
+/* ── Total savings card spans full width ── */
+.total-savings-card {
+  grid-column: 1 / -1;
+  background: #2d1a10;
+  border-radius: 16px;
+  padding: 1.75rem;
   display: flex;
-  justify-content: space-between;
-  font-size: 0.72rem;
-  color: var(--text-muted);
-  margin-bottom: 0.25rem;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
 }
 
-/* ── Side cards ── */
-.goals-side { display: flex; flex-direction: column; gap: 1rem; }
-
-.goal-card {
-  background: #fff;
-  border-radius: 14px;
-  padding: 1.25rem;
-  border: 1.5px solid var(--border);
-  box-shadow: 0 1px 6px rgba(45,26,16,0.05);
-}
 .goal-card-dark {
   background: var(--text);
   border-color: transparent;
@@ -289,20 +315,6 @@
 .goal-card-dark .goal-type-sm { color: var(--brand-light); }
 .goal-emoji-sm { font-size: 1.1rem; }
 
-.goal-card-name {
-  font-size: 1.05rem;
-  font-style: italic;
-  color: var(--text);
-  margin-bottom: 0.4rem;
-}
-.goal-card-dark .goal-card-name { color: #f5ede8; }
-
-.goal-card-amounts {
-  display: flex;
-  align-items: baseline;
-  gap: 0.35rem;
-  margin-bottom: 0.6rem;
-}
 .gc-current {
   font-family: 'Cormorant Garamond', serif;
   font-size: 1.3rem;
@@ -444,3 +456,704 @@
   transition: outline 0.15s;
 }
 .color-opt.selected { outline: 2px solid var(--brand); outline-offset: 2px; }
+
+/* ── Paste these styles into your SavingsGoals.css ─────────────────────────── */
+
+/* Inline error inside AddMoneyRow */
+.add-inline-err {
+  width: 100%;
+  font-size: 0.72rem;
+  color: #c0392b;
+  margin-bottom: 4px;
+  padding: 2px 4px;
+  background: #fdf0ee;
+  border-radius: 4px;
+}
+
+/* ── Momentum Panel ─────────────────────────────────────────────────────────── */
+.momentum-panel {
+  margin-top: 2rem;
+  background: linear-gradient(135deg, #faf7f4 0%, #f3ede6 100%);
+  border: 1px solid rgba(180, 140, 110, 0.2);
+  border-radius: 20px;
+  padding: 1.75rem 2rem;
+  box-shadow: 0 4px 24px rgba(100, 60, 30, 0.06);
+}
+
+.momentum-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1.4rem;
+}
+
+.momentum-icon {
+  font-size: 1rem;
+  color: #a07850;
+}
+
+.momentum-title {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #3d2b1f;
+  margin: 0;
+}
+
+.momentum-sub {
+  font-size: 0.75rem;
+  color: #a08878;
+  margin-left: auto;
+  font-style: italic;
+}
+
+/* Overview strip */
+.momentum-strip {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.momentum-stat {
+  flex: 1;
+  background: white;
+  border-radius: 12px;
+  padding: 0.9rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  box-shadow: 0 2px 8px rgba(100, 60, 30, 0.06);
+  border: 1px solid rgba(180, 140, 110, 0.12);
+}
+
+.mstat-value {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #3d2b1f;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mstat-label {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #a08878;
+}
+
+/* Spotlight cards */
+.momentum-spotlights {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.4rem;
+}
+
+.spotlight-card {
+  flex: 1;
+  border-radius: 14px;
+  padding: 1.1rem 1.2rem;
+}
+
+.spotlight-lead {
+  background: linear-gradient(135deg, #2d1f14 0%, #3d2b1f 100%);
+  color: #f0e8d8;
+}
+
+.spotlight-attention {
+  background: white;
+  border: 1px solid rgba(180, 140, 110, 0.2);
+  color: #3d2b1f;
+  box-shadow: 0 2px 12px rgba(100, 60, 30, 0.07);
+}
+
+.spotlight-label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.7;
+  margin-bottom: 0.4rem;
+}
+
+.spotlight-name {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.spotlight-pct {
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+.spotlight-bar {
+  height: 6px;
+  border-radius: 99px;
+  background: rgba(255,255,255,0.2);
+  margin-bottom: 0.65rem;
+  overflow: hidden;
+}
+
+.spotlight-lead .spotlight-bar {
+  background: rgba(255,255,255,0.15);
+}
+
+.spotlight-attention .spotlight-bar {
+  background: #ede5dc;
+}
+
+.spotlight-fill {
+  height: 100%;
+  border-radius: 99px;
+  background: #c4a070;
+  transition: width 0.6s ease;
+}
+
+.spotlight-fill.attn {
+  background: #a07850;
+}
+
+.spotlight-nudge {
+  font-size: 0.78rem;
+  opacity: 0.85;
+  margin-bottom: 0.3rem;
+  line-height: 1.4;
+}
+
+.spotlight-hint {
+  font-size: 0.7rem;
+  opacity: 0.6;
+}
+
+/* Velocity rows */
+.momentum-velocity {
+  border-top: 1px solid rgba(180, 140, 110, 0.15);
+  padding-top: 1.2rem;
+}
+
+.velocity-header {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #a08878;
+  margin-bottom: 0.8rem;
+}
+
+.velocity-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.vel-emoji {
+  font-size: 1.1rem;
+  width: 28px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.vel-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.vel-name {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #3d2b1f;
+}
+
+.vel-bar-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.vel-bar {
+  flex: 1;
+  height: 5px;
+  border-radius: 99px;
+  background: #ede5dc;
+  overflow: hidden;
+}
+
+.vel-fill {
+  height: 100%;
+  border-radius: 99px;
+  transition: width 0.6s ease;
+  opacity: 0.85;
+}
+
+.vel-pct {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #a07850;
+  width: 30px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.vel-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.vel-deposits {
+  font-size: 0.65rem;
+  color: #a08878;
+}
+
+.vel-remaining {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #3d2b1f;
+}
+
+@media (max-width: 600px) {
+  .momentum-strip { flex-direction: column; }
+  .momentum-spotlights { flex-direction: column; }
+  .momentum-panel { padding: 1.2rem; }
+}
+
+/* ── ADD THESE STYLES TO THE BOTTOM OF YOUR SavingsGoals.css ── */
+
+/* ─── Two-column layout ─────────────────────────────────────────────────────── */
+.savings-main-layout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.savings-left-col {
+  min-width: 0;
+}
+
+.savings-right-col {
+  position: sticky;
+  top: 1.5rem;
+}
+
+/* ─── Calculator Panel ──────────────────────────────────────────────────────── */
+.calculator-panel {
+  background: #fff;
+  border: 1px solid #e8ddd5;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+
+.calc-panel-header {
+  padding: 1rem 1rem 0;
+}
+
+.calc-tabs {
+  display: flex;
+  gap: 0.25rem;
+  background: #f5f0eb;
+  border-radius: 10px;
+  padding: 4px;
+}
+
+.calc-tab {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #8a7060;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.calc-tab.active {
+  background: #fff;
+  color: #3d2c1e;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+/* ─── Calculator Body ───────────────────────────────────────────────────────── */
+.calc-body {
+  padding: 1rem;
+}
+
+.calc-subtitle {
+  font-size: 0.78rem;
+  color: #8a7060;
+  margin: 0 0 0.875rem;
+  font-style: italic;
+}
+
+.calc-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-bottom: 0.75rem;
+}
+
+.calc-field label {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #8a7060;
+  margin-bottom: 0.25rem;
+  text-transform: uppercase;
+}
+
+.calc-input {
+  width: 100%;
+  padding: 0.5rem 0.625rem;
+  border: 1px solid #e0d5cb;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  color: #3d2c1e;
+  background: #faf8f5;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+  outline: none;
+}
+
+.calc-input:focus {
+  border-color: #b89880;
+  background: #fff;
+}
+
+/* ─── Quick fill buttons ────────────────────────────────────────────────────── */
+.calc-quick-fill {
+  margin-bottom: 0.75rem;
+}
+
+.calc-quick-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #8a7060;
+  display: block;
+  margin-bottom: 0.35rem;
+}
+
+.calc-quick-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.calc-quick-btn {
+  padding: 0.3rem 0.6rem;
+  border: 1px solid #e0d5cb;
+  border-radius: 20px;
+  background: #faf8f5;
+  font-size: 0.75rem;
+  color: #3d2c1e;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.calc-quick-btn:hover {
+  background: #e8ddd5;
+  border-color: #b89880;
+}
+
+/* ─── Submit button ─────────────────────────────────────────────────────────── */
+.calc-submit-btn {
+  width: 100%;
+  padding: 0.65rem;
+  background: #3d2c1e;
+  color: #f5ede4;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  letter-spacing: 0.03em;
+}
+
+.calc-submit-btn:hover {
+  background: #5a3e2b;
+}
+
+/* ─── Result ────────────────────────────────────────────────────────────────── */
+.calc-result {
+  margin-top: 1rem;
+  padding: 0.875rem;
+  background: #faf8f5;
+  border-radius: 12px;
+  border: 1px solid #e8ddd5;
+}
+
+.calc-result-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #8a7060;
+  margin-bottom: 0.75rem;
+}
+
+.calc-result-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.5rem;
+  margin-bottom: 0.625rem;
+}
+
+.calc-result-item {
+  text-align: center;
+  padding: 0.5rem 0.25rem;
+  background: #fff;
+  border-radius: 8px;
+  border: 1px solid #e0d5cb;
+}
+
+.calc-result-item.primary {
+  background: #3d2c1e;
+  border-color: #3d2c1e;
+  grid-column: 1 / -1;
+}
+
+.calc-result-item.primary .calc-result-val {
+  color: #f5ede4;
+  font-size: 1.25rem;
+}
+
+.calc-result-item.primary .calc-result-period {
+  color: #c4a090;
+}
+
+.calc-result-val {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #3d2c1e;
+}
+
+.calc-result-period {
+  display: block;
+  font-size: 0.65rem;
+  color: #8a7060;
+  margin-top: 0.1rem;
+}
+
+.calc-result-note {
+  font-size: 0.72rem;
+  color: #8a7060;
+  text-align: center;
+  font-style: italic;
+}
+
+/* ─── Tips Body ─────────────────────────────────────────────────────────────── */
+.tips-body {
+  padding: 0.875rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.tip-row {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
+.tip-icon {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+.tip-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #3d2c1e;
+  margin-bottom: 0.15rem;
+}
+
+.tip-desc {
+  font-size: 0.72rem;
+  color: #8a7060;
+  line-height: 1.4;
+}
+
+/* ─── Responsive: stack on smaller screens ──────────────────────────────────── */
+@media (max-width: 900px) {
+  .savings-main-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .savings-right-col {
+    position: static;
+  }
+}
+
+/* ── Fix: Add money row overflow in featured card ── */
+.goal-featured {
+  overflow: visible; /* was: hidden — allows the row to breathe */
+}
+
+.goal-featured .add-money-row {
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.goal-featured .add-money-input {
+  min-width: 0;
+  flex: 1 1 100px;
+}
+
+.goal-featured .add-money-confirm,
+.goal-featured .add-money-cancel {
+  flex-shrink: 0;
+}
+
+/* ── Goals grid — uniform card layout ── */
+.goals-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+  align-items: stretch;
+}
+
+/* ── Side column: sits in column 2, spans all side card rows ── */
+.goals-side {
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* ── Emoji background — works for BOTH featured and side cards ── */
+.goal-emoji-bg {
+  position: absolute;
+  top: 50%;
+  right: 1.5rem;
+  transform: translateY(-60%);
+  font-size: 5rem;
+  opacity: 0.2;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Type badge — works for both card types ── */
+.goal-type-badge {
+  position: absolute;
+  top: 1.25rem;
+  left: 1.25rem;
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  background: rgba(255,255,255,0.75);
+  padding: 0.25rem 0.6rem;
+  border-radius: 20px;
+  font-weight: 600;
+  border: 1px solid rgba(0,0,0,0.08);
+  z-index: 1;
+}
+
+/* ── Due date badge — for both card types ── */
+.goal-due {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  text-align: right;
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  z-index: 1;
+}
+.goal-due strong {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--text);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.gc-current {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem;
+  color: var(--text);
+}
+
+.gc-total {
+  font-size: 0.75rem;
+  color: var(--text-light);
+}
+
+/* ── Add money row — no overflow issues since overflow:hidden is back ── */
+.goal-featured .add-money-row,
+.goal-card .add-money-row {
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.goal-featured .add-money-input,
+.goal-card .add-money-input {
+  min-width: 0;
+  flex: 1 1 100px;
+}
+
+/* ── Total savings card ── */
+.total-savings-card {
+  grid-column: 1 / -1;        /* span full width */
+  background: #2d1a10;
+  border-radius: 16px;
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+  margin-top: 0;
+}
+
+/* ── Goal type picker ── */
+.goal-type-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.goal-type-opt {
+  padding: 0.35rem 0.75rem;
+  border: 1.5px solid var(--border);
+  border-radius: 20px;
+  background: var(--bg);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-family: 'Jost', sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.18s;
+  white-space: nowrap;
+}
+
+.goal-type-opt:hover {
+  border-color: var(--brand-light);
+  color: var(--brand);
+  background: #fff;
+}
+
+.goal-type-opt.selected {
+  background: var(--brand);
+  color: #fff;
+  border-color: var(--brand);
+  font-weight: 600;
+}

@@ -30,7 +30,7 @@ const Sidebar = ({ currentPage, onNavigate, onLogout, currentUser }) => {
       <div className="sidebar-brand">
         <span className="brand-mark">✦</span>
         <div>
-          <div className="brand-name">Sanctuary</div>
+          <div className="brand-name">Fintrack</div>
           <div className="brand-sub">Mindful Finance</div>
         </div>
       </div>

@@ -272,6 +272,10 @@ const Transactions = ({ transactions, onAddTransaction, onDeleteTransaction, cur
                 <div className={`tx-amount ${t.amount < 0 ? 'neg' : 'pos'}`}>
                   {t.amount < 0 ? '-' : '+'}₱{Math.abs(t.amount).toFixed(2)}
                 </div>
+                {/* ── NEW: action buttons ── */}
+                <div className="tx-actions">
+                  <button className="tx-del-btn" onClick={() => onDeleteTransaction(t.id)}>✕</button>
+                </div>
               </div>
             ))}
 

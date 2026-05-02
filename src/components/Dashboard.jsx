@@ -47,7 +47,7 @@ const Dashboard = ({ transactions, currentUser, savingsGoals }) => {
 
         {/* ── Balance Card ── */}
         <div className="balance-card">
-          <div className="balance-label">Current Sanctuary Balance</div>
+          <div className="balance-label">Current Fintrack Balance</div>
           <div className="balance-amount">₱{fmt(totalBalance)}</div>
           <div className="balance-meta">
             <span>Month <strong>{new Date().toLocaleString('default', { month: 'long' })}</strong></span>

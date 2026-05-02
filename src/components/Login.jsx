@@ -32,15 +32,17 @@ const Login = ({ onLogin }) => {
       const data = await res.json();
 
       if (!res.ok) {
+        // Show the actual error from the backend (wrong email/password)
         setError(data.detail || 'Invalid email or password.');
-        setLoading(false);
         return;
       }
 
+      // Only proceed if login was truly successful
       onLogin(data);
+
     } catch {
-      console.warn('Backend offline — using guest session');
-      onLogin({ id: 0, first_name: 'Guest', last_name: '', email });
+      // Only show a connection error — never allow guest access
+      setError('Unable to connect to the server. Please make sure the backend is running.');
     } finally {
       setLoading(false);
     }
@@ -60,7 +62,7 @@ const Login = ({ onLogin }) => {
   return (
     <div className="login-overlay">
       <div className="login-header">
-        <h1 className="brand-name">MoneyTracker</h1>
+        <h1 className="brand-name">Sanctuary</h1>
         <p className="brand-tagline">A space for mindful finance</p>
       </div>
 
