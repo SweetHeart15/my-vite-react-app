@@ -6,6 +6,7 @@ from datetime import datetime
 from contextlib import asynccontextmanager
 import hashlib
 import secrets
+import os
 
 from backend.database import get_db, init_db
 
@@ -20,6 +21,8 @@ async def lifespan(app: FastAPI):
 app = FastAPI(title="Sanctuary API", version="1.0.0", lifespan=lifespan)
 
 # ── CORS ───────────────────────────────────────────────────────────────────────
+origins = os.getenv("CLIENT_ORIGIN", "http://localhost:5173").split(",")
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:5173", "http://localhost:3000"],
