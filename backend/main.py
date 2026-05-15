@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel
 from typing import Optional
 from datetime import datetime
 from contextlib import asynccontextmanager
@@ -8,7 +8,11 @@ import hashlib
 import secrets
 import os
 
-from backend.database import get_db, init_db
+# Works both locally (python -m uvicorn main:app) and on Vercel (api/index.py)
+try:
+    from backend.database import get_db, init_db   # when run as a package
+except ModuleNotFoundError:
+    from database import get_db, init_db            # when run from project root
 
 
 # ── Lifespan ───────────────────────────────────────────────────────────────────
@@ -17,15 +21,22 @@ async def lifespan(app: FastAPI):
     init_db()
     yield
 
+
 # ── App ────────────────────────────────────────────────────────────────────────
 app = FastAPI(title="Sanctuary API", version="1.0.0", lifespan=lifespan)
 
+
 # ── CORS ───────────────────────────────────────────────────────────────────────
-origins = os.getenv("CLIENT_ORIGIN", "http://localhost:5173").split(",")
+# Set CLIENT_ORIGIN in Vercel env vars to your frontend URL, e.g.:
+#   https://your-app.vercel.app
+# Multiple origins can be comma-separated:
+#   https://your-app.vercel.app,https://your-custom-domain.com
+_raw_origins = os.getenv("CLIENT_ORIGIN", "http://localhost:5173,http://localhost:3000")
+origins = [o.strip() for o in _raw_origins.split(",") if o.strip()]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://localhost:3000"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -318,25 +329,37 @@ def get_summary(user_id: int):
     conn = get_db()
     total_income = conn.execute(
         "SELECT COALESCE(SUM(amount), 0) FROM transactions WHERE user_id = ? AND amount > 0", (user_id,)
-    ).fetchone()[0]
+    ).fetchone()
     total_expenses = conn.execute(
         "SELECT COALESCE(SUM(ABS(amount)), 0) FROM transactions WHERE user_id = ? AND amount < 0", (user_id,)
-    ).fetchone()[0]
+    ).fetchone()
     total_savings = conn.execute(
         "SELECT COALESCE(SUM(current_amount), 0) FROM savings_goals WHERE user_id = ?", (user_id,)
-    ).fetchone()[0]
+    ).fetchone()
     total_goal = conn.execute(
         "SELECT COALESCE(SUM(goal_amount), 1) FROM savings_goals WHERE user_id = ?", (user_id,)
-    ).fetchone()[0]
+    ).fetchone()
     conn.close()
 
-    balance = total_income - total_expenses
-    savings_pct = round((total_savings / total_goal) * 100) if total_goal else 0
+    # Aggregate queries return a single-key dict from RealDictCursor;
+    # grab the first (and only) value regardless of the column alias.
+    def first_val(row):
+        if isinstance(row, dict):
+            return list(row.values())[0]
+        return row[0]  # sqlite3 fallback
+
+    income   = first_val(total_income)   or 0
+    expenses = first_val(total_expenses) or 0
+    savings  = first_val(total_savings)  or 0
+    goal     = first_val(total_goal)     or 1
+
+    balance      = income - expenses
+    savings_pct  = round((savings / goal) * 100) if goal else 0
 
     return {
         "balance":              round(balance, 2),
-        "monthly_income":       round(total_income, 2),
-        "monthly_expenses":     round(total_expenses, 2),
-        "total_savings":        round(total_savings, 2),
+        "monthly_income":       round(income, 2),
+        "monthly_expenses":     round(expenses, 2),
+        "total_savings":        round(savings, 2),
         "savings_progress_pct": savings_pct,
     }
