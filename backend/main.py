@@ -27,7 +27,7 @@ app = FastAPI(title="Sanctuary API", version="1.0.0", lifespan=lifespan)
 
 
 # ── CORS ───────────────────────────────────────────────────────────────────────
-_raw_origins = os.getenv("CLIENT_ORIGIN", "http://localhost:5173,http://localhost:3000,https://my-vite-react-ri34xnxzv-sweetheart15s-projects.vercel.app,https://my-vite-react-app-c6e7.onrender.com")
+_raw_origins = os.getenv("CLIENT_ORIGIN", "https://my-vite-react-ri34xnxzv-sweetheart15s-projects.vercel.app,https://my-vite-react-app-c6e7.onrender.com")
 origins = [o.strip() for o in _raw_origins.split(",") if o.strip()]
 
 app.add_middleware(
