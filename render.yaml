@@ -2,10 +2,10 @@ services:
   - type: web
     name: sanctuary-api
     runtime: python
-    buildCommand: pip install -r requirements.txt
+    buildCommand: pip install -r /backend/requirements.txt
     startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
     envVars:
       - key: DATABASE_URL
-        sync: false          # fill this in Render's dashboard
+        sync: postgresql://neondb_owner:npg_jVTk7HLG9enX@ep-wild-rain-ao89sow0.c-2.ap-southeast-1.aws.neon.tech/neondb?sslmode=require
       - key: CLIENT_ORIGIN
-        sync: false          # your Vercel frontend URL
+        sync: https://fintrack-flame-nine.vercel.app          # your Vercel frontend URL
