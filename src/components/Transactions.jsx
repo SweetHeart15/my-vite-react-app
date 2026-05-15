@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Transactions.css';
 
-const API = import.meta.env.VITE_API_URL;
+const API = 'http://localhost:8000';
 
 const categoryIcon = (cat) => ({
   'Dining & Drinks': '☕',

@@ -1,11 +1,11 @@
 import { defineConfig } from 'vite'
-import react, { reactCompilerPreset } from '@vitejs/plugin-react'
-import babel from '@rolldown/plugin-babel'
+import react from '@vitejs/plugin-react'
 
-// https://vite.dev/config/
 export default defineConfig({
-  plugins: [
-    react(),
-    babel({ presets: [reactCompilerPreset()] })
-  ],
+  plugins: [react()],
+  define: {
+    // This tells Vite: "Every time you see this exact string in my code, 
+    // replace it with my Vercel environment variable."
+    "'http://localhost:8000'": "import.meta.env.VITE_API_URL"
+  }
 })
