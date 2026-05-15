@@ -27,11 +27,7 @@ app = FastAPI(title="Sanctuary API", version="1.0.0", lifespan=lifespan)
 
 
 # ── CORS ───────────────────────────────────────────────────────────────────────
-# Set CLIENT_ORIGIN in Vercel env vars to your frontend URL, e.g.:
-#   https://your-app.vercel.app
-# Multiple origins can be comma-separated:
-#   https://your-app.vercel.app,https://your-custom-domain.com
-_raw_origins = os.getenv("CLIENT_ORIGIN", "http://localhost:5173,http://localhost:3000")
+_raw_origins = os.getenv("CLIENT_ORIGIN", "http://localhost:5173,http://localhost:3000,https://fintrack-flame-nine.vercel.app")
 origins = [o.strip() for o in _raw_origins.split(",") if o.strip()]
 
 app.add_middleware(
