@@ -372,7 +372,7 @@ return (
         <div className="goal-progress-fill" style={{ width: `${pct}%` }} />
       </div>
       <div className="goal-progress-meta">
-        <span>{pct}% of goal reached{!featured && ` · Due ${g.due_date}`}</span>
+        <span>{pct}% of goal reached</span>
       </div>
 
       {goalHistory.length > 0 && (

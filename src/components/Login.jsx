@@ -12,6 +12,9 @@ const Login = ({ onLogin }) => {
   const [rememberDevice, setRememberDevice] = useState(false);
   const [error, setError]   = useState('');
   const [loading, setLoading] = useState(false);
+  const [forgotMode, setForgotMode] = useState(false);
+  const [forgotEmail, setForgotEmail] = useState('');
+  const [forgotMsg, setForgotMsg] = useState('');
 
   const handleSignIn = async (e) => {
     e.preventDefault();
@@ -88,10 +91,8 @@ const Login = ({ onLogin }) => {
           <div className="input-group">
             <div className="password-label-row">
               <label>PASSWORD</label>
-              <button type="button" className="forgot-link" onClick={handleForgotPassword}>
-                FORGOT?
-              </button>
             </div>
+            
             <div className="password-wrapper">
               <input
                 type={showPassword ? 'text' : 'password'}
