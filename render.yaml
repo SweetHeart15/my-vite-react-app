@@ -2,10 +2,11 @@ services:
   - type: web
     name: sanctuary-api
     runtime: python
-    buildCommand: pip install -r backend/requirements.txt
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
     startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
-envVars:
-  - key: DATABASE_URL
-    sync: false   # value is set manually in the Render dashboard
-  - key: CLIENT_ORIGIN
-    sync: false
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: CLIENT_ORIGIN
+        value: https://fintrack-flame-nine.vercel.app
