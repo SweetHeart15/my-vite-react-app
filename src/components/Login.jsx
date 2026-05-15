@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './Login.css';
 import CreateAccount from './CreateAccount';
 
-const API = 'http://localhost:8000';
+const API = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
 const Login = ({ onLogin }) => {
   const [showCreate, setShowCreate] = useState(false);

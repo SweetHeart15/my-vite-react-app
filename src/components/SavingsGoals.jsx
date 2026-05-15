@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import './SavingsGoals.css';
 
-const API = 'http://localhost:8000';
+const API = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
 // ─── Extracted outside parent so it never remounts on re-render ───────────────
 const AddMoneyRow = ({ goal, onConfirm, onCancel }) => {
