@@ -1,3 +1,4 @@
+import email
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -171,10 +172,15 @@ def register(data: RegisterRequest):
 @app.post("/login")
 def login(data: LoginRequest):
     conn = get_db()
-    row = conn.execute(
-        "SELECT * FROM users WHERE email = ?", (data.email.lower(),)
-    ).fetchone()
-    conn.close()
+    from psycopg2.extras import RealDictCursor
+    cur = conn.cursor(cursor_factory=RealDictCursor)
+    
+    try:
+        cur.execute("SELECT * FROM users WHERE email = %s", (data.email,))
+        row = cur.fetchone()
+    finally:
+        cur.close()
+        conn.close() # Always close the connection too!
 
     if not row or not verify_password(data.password, row["password_hash"]):
         raise HTTPException(status_code=401, detail="Invalid email or password.")
