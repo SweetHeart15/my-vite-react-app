@@ -138,35 +138,31 @@ def root():
 # AUTH
 # ════════════════════════════════════════════════════════════════════════════════
 
-@app.post("/register", response_model=RegisterOut, status_code=201)
+@app.post("/register")
 def register(data: RegisterRequest):
-    if not data.first_name.strip():
-        raise HTTPException(status_code=422, detail="First name is required.")
-    if not data.last_name.strip():
-        raise HTTPException(status_code=422, detail="Last name is required.")
-    if len(data.password) < 8:
-        raise HTTPException(status_code=422, detail="Password must be at least 8 characters.")
-
     conn = get_db()
-    existing = conn.execute(
-        "SELECT id FROM users WHERE email = ?", (data.email.lower(),)
-    ).fetchone()
-    if existing:
+    cur = conn.cursor()
+    
+    try:
+        cur.execute("SELECT * FROM users WHERE email = %s", (data.email,))
+        if cur.fetchone():
+            raise HTTPException(status_code=400, detail="Email already registered")
+        hashed_pw = hash_password(data.password)
+        cur.execute(
+            "INSERT INTO users (first_name, last_name, email, password_hash) VALUES (%s, %s, %s, %s)",
+            (data.first_name, data.last_name, data.email, hashed_pw)
+        )
+        conn.commit()
+        
+        return {"message": "User created successfully"}
+        
+    except Exception as e:
+        conn.rollback() 
+        print(f"Registration Error: {e}")
+        raise HTTPException(status_code=500, detail="Internal Server Error")
+    finally:
+        cur.close()
         conn.close()
-        raise HTTPException(status_code=409, detail="An account with this email already exists.")
-
-    password_hash = hash_password(data.password)
-    cursor = conn.execute(
-        "INSERT INTO users (first_name, last_name, email, password_hash) VALUES (?, ?, ?, ?)",
-        (data.first_name.strip(), data.last_name.strip(), data.email.lower(), password_hash),
-    )
-    conn.commit()
-    row = conn.execute(
-        "SELECT id, first_name, last_name, email, created_at FROM users WHERE id = ?",
-        (cursor.lastrowid,)
-    ).fetchone()
-    conn.close()
-    return dict(row)
 
 
 @app.post("/login")
